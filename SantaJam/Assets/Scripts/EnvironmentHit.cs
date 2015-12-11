@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TrapHit : MonoBehaviour {
+public class EnvironmentHit : MonoBehaviour {
 
 	public int points;
 
