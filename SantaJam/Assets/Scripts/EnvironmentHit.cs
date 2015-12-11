@@ -6,7 +6,7 @@ public class TrapHit : MonoBehaviour {
 	public int points;
 
 	void Start () {
-		print("start");
+
 	}
 	
 
@@ -14,11 +14,8 @@ public class TrapHit : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter (Collision collision) {
-			print("wehweh");
+	void OnTriggerEnter (Collider player) {
+		player.GetComponent<Score>().CalcScore(points);
 	}
 
-	void SubtractPoints() {
-
-	}
 }

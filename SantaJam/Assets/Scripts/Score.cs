@@ -14,4 +14,10 @@ public class Score : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void CalcScore (int score) {
+		totalScore += score;
+		print(totalScore);
+	}
+
 }
