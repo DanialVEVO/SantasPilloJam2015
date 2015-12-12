@@ -36,7 +36,7 @@ public class Level : MonoBehaviour {
             bounds.Encapsulate(child_bounds);
         }
 
-        zLength = bounds.size.z + bounds.min.z;
+        zLength =  bounds.max.z;
 
     }
 
