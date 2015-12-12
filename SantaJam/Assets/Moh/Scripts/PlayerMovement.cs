@@ -174,4 +174,21 @@ public class PlayerMovement : MonoBehaviour
 
 		transform.position = pos;
 	}
+
+    void OnDrawGizmos()
+    {
+
+
+        for (int i = 0; i < lanePosX.Length; i++)
+        {
+            Gizmos.color = Color.blue;
+
+            Gizmos.DrawLine(new Vector3(lanePosX[i], posYMin, transform.position.z), new Vector3(lanePosX[i], posYMin, transform.position.z + 300));
+
+            Gizmos.color = Color.cyan;
+
+            Gizmos.DrawLine(new Vector3(lanePosX[i], posYMax, transform.position.z), new Vector3(lanePosX[i], posYMax, transform.position.z + 300));
+        }
+
+    }
 }
