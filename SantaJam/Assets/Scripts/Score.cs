@@ -24,7 +24,8 @@ public class Score : MonoBehaviour {
 		if(score > 0){
 			Instantiate(pickupParticle, transform.position, Quaternion.identity);
 		}
-		totalScore += score;
+		
+		totalScore = Mathf.Max(0, totalScore + score);
 		print(totalScore);
 		SetScoreText();
 	}

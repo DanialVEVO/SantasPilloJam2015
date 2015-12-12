@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 	int pilloLeftCrashCounter, pilloRightCrashCounter; 
 
 	float btnLeftTime, btnRightTime;
+	bool movedToLeft, movedToRight;
+
 	float jumpVelocity, movementVelocity, timeAccumulated;
 	int laneNow, laneMovingTo;
 	bool jumping;
@@ -42,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
 		laneNow = (lanePosX.GetLength(0) - 1) / 2;
 		laneMovingTo = laneNow;
 		
+		movedToLeft = false;
+		movedToRight = false;
+
 		pilloLeftLastValue = 0.0f;
 		pilloRightLastValue = 0.0f;
 		pilloLeftCrashCounter = 0;
