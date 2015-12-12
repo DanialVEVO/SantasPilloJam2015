@@ -26,7 +26,7 @@ public class Score : MonoBehaviour {
 		}
 		
 		totalScore = Mathf.Max(0, totalScore + score);
-		print(totalScore);
+		//print(totalScore);
 		SetScoreText();
 	}
 

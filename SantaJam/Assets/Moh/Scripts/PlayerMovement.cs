@@ -5,34 +5,37 @@ using Pillo;
 public class PlayerMovement : MonoBehaviour
 {
 	// Pillo Settings
-	[SerializeField] float		pilloThreshold			= 0.20f;
-	[SerializeField] int		pilloCrashThreshold		= 40;
-	[SerializeField] bool		pilloCrashProtection	= true;
+	[SerializeField] [Range(0.0f, 1.0f)] float		pilloThreshold			= 0.20f;
+	[SerializeField] [Range(0, 120)] int			pilloCrashThreshold		= 40;
+	[SerializeField] bool							pilloCrashProtection	= true;
 
 	// General Controls
-	[SerializeField] float		btnHoldTimeThreshold1	= 0.03f;
-	[SerializeField] float		btnHoldTimeThreshold2	= 0.07f;
-	[SerializeField] float		btnHoldTimeThreshold3	= 0.10f;
+	[SerializeField] [Range(0.0f, 0.2f)] float		btnHoldTimeThreshold1	= 0.03f;
+	[SerializeField] [Range(0.0f, 0.2f)] float		btnHoldTimeThreshold2	= 0.07f;
+	[SerializeField] [Range(0.0f, 0.2f)] float		btnHoldTimeThreshold3	= 0.10f;
 
 	// Horizontal Movement
-	[SerializeField] float[]	lanePosX				= { -5.0f, 0.0f, 5.0f };
-	[SerializeField] float		laneSwitchTime			= 0.3f;
+	[SerializeField] [Range(0.0f, 1.0f)] float		laneSwitchTime			= 0.3f;
+	[SerializeField] float[]						lanePosX				= { -5.0f, 0.0f, 5.0f };
 
 	// Vertical Movement
-	[SerializeField] float		posYMin					= 0.0f;
-	[SerializeField] float		posYMax					= 4.0f;
+	[SerializeField] float							posYMin					= 0.0f;
+	[SerializeField] float							posYMax					= 4.0f;
 
-	[SerializeField] float		MaxJumpSpeed			= 1.00f;
-	[SerializeField] float		MaxFallSpeed			= 1.00f;
+	[SerializeField] [Range(0.0f, 4.0f)] float		MaxJumpSpeed			= 1.00f;
+	[SerializeField] [Range(0.0f, 4.0f)] float		MaxFallSpeed			= 1.00f;
 
-	[SerializeField] float		jumpAccelerate			= 0.10f;
-	[SerializeField] float		jumpGravity				= 0.20f;
+	[SerializeField] [Range(0.0f, 0.5f)] float		jumpAccelerate			= 0.10f;
+	[SerializeField] [Range(0.0f, 0.5f)] float		jumpGravity				= 0.20f;
 	
 	// Boost
-	[SerializeField] bool		boostEnabled			= true;
-	[SerializeField] float		boostTimeToGet			= 1.00f;
-	[SerializeField] float		boostDurationTime		= 3.00f;
-	[SerializeField] float		boostMultiplier			= 2.00f;
+	[SerializeField] bool							boostEnabled			= true;
+	[SerializeField] [Range(0.0f, 5.0f)] float		boostTimeToGet			= 1.00f;
+	[SerializeField] [Range(0.0f, 2.0f)] float		boostAccelerateTime		= 1.00f;
+	[SerializeField] [Range(0.0f, 5.0f)] float		boostDurationTime		= 3.00f;
+	[SerializeField] [Range(1.0f, 5.0f)] float		boostMultiplier			= 2.00f;
+	[SerializeField] [Range(0.0f, 100.0f)] float	viewWidthNormal			= 30.00f;
+	[SerializeField] [Range(0.0f, 100.0f)] float	viewWidthBoosted		= 60.00f;
 
 
 	LevelManager levelmanager;
@@ -195,14 +198,26 @@ public class PlayerMovement : MonoBehaviour
 			boosterTime = 0;
 
 		boosterTime = boosterTime % (boostTimeToGet + boostDurationTime);
-		
-		//Camera.main.fieldOfView
 
-		if (boosterTime >= boostTimeToGet && boosterTime < boostTimeToGet + boostDurationTime)
-			levelmanager.setLevelSpeedMultiplier(boostMultiplier - (boostMultiplier - 1) * (boosterTime - boostTimeToGet) / boostDurationTime);
+		// If booster accelerating
+		if (boosterTime >= boostTimeToGet && boosterTime < boostTimeToGet + boostAccelerateTime)
+		{
+			levelmanager.setLevelSpeedMultiplier(Mathf.Lerp(1, boostMultiplier, (boosterTime - boostTimeToGet) / boostAccelerateTime));
+			//setDollyZoom(Mathf.Lerp(viewWidthNormal, viewWidthBoosted, (boosterTime - boostTimeToGet) / boostAccelerateTime));
+		}
+		// If booster decelerating
+		else if (boosterTime >= boostTimeToGet + boostAccelerateTime && boosterTime < boostTimeToGet + boostDurationTime)
+		{
+			levelmanager.setLevelSpeedMultiplier(Mathf.Lerp(boostMultiplier, 1, (boosterTime - boostTimeToGet - boostAccelerateTime) / (boostDurationTime - boostAccelerateTime)));
+			//setDollyZoom(Mathf.Lerp(viewWidthBoosted, viewWidthNormal, (boosterTime - boostTimeToGet - boostAccelerateTime) / (boostDurationTime - boostAccelerateTime)));
+		}
 		else
+		{
 			levelmanager.setLevelSpeedMultiplier(1);
-		
+			//setDollyZoom(viewWidthNormal);
+		}
+
+
 		// Horizontal Movement
 		if (laneNow != laneMovingTo)
 		{
@@ -236,3 +251,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+
