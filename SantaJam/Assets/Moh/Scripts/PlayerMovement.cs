@@ -3,8 +3,23 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-	[SerializeField] float laneSwitchTime = 1.0f;
-	[SerializeField] float[] lanePosX = { -5.0f, 0.0f, 5.0f };
+
+	// Horizontal Movement
+	[SerializeField] bool		laneShow = true;
+	[SerializeField] float[]	lanePosX = { -5.0f, 0.0f, 5.0f };
+	[SerializeField] float		laneSwitchTime = 1.0f;
+
+	// Vertical Movement
+	[SerializeField] float posYMin		= 0.0f;
+	[SerializeField] float posYMax		= 4.0f;
+
+	[SerializeField] float MaxJumpSpeed		= 1.00f;
+	[SerializeField] float MaxFallSpeed		= 1.00f;
+
+	[SerializeField] float jumpAccelerate	= 0.10f;
+	[SerializeField] float jumpGravity		= 0.10f;
+
+	float velocity;
 
 	float timeAccumulated;
 	int laneNow, laneMovingTo;
@@ -12,9 +27,13 @@ public class PlayerMovement : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		// Horizontal Movement
 		timeAccumulated = 0.0f;
 		laneNow = (lanePosX.GetLength(0) - 1) / 2;
 		laneMovingTo = laneNow;
+
+		// Vertical Movement
+		velocity = 0.0f;
 	}
 
 	void FixedUpdate()
@@ -25,15 +44,46 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
+		// Vertical Movement
+		Vector3 pos = transform.position;
+
+		if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow))
+		{
+			velocity += jumpAccelerate;
+		}
+		else
+		{
+			velocity -= jumpGravity;
+		}
+
+		velocity = Mathf.Clamp(velocity, -MaxFallSpeed, MaxJumpSpeed);
+
+		pos.y = Mathf.Clamp(pos.y + velocity, posYMin, posYMax);
+
+		if (pos.y == posYMin)
+		{
+			velocity = 0.0f;
+		}
+
+		print("velocity " + velocity);
+
+		transform.position = pos;
+
+
+
+
+
+		// Horizontal Movement
 		if (laneNow == laneMovingTo)
 		{
-			if (Input.GetKeyDown(KeyCode.LeftArrow) && !Input.GetKeyDown(KeyCode.RightArrow))
+			if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
 			{
 				laneMovingTo--;
 				timeAccumulated = 0.0f;
 			}
 
-			else if (Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
+			else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
 			{
 				laneMovingTo++;
 				timeAccumulated = 0.0f;
