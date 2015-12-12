@@ -6,6 +6,7 @@ public class Score : MonoBehaviour {
 
 	public int	totalScore;
 	public Text	scoreText;
+	public ParticleSystem pickupParticle;
 
 	// Use this for initialization
 	void Start () {
@@ -20,12 +21,16 @@ public class Score : MonoBehaviour {
 	}
 
 	public void CalcScore (int score) {
+		if(score > 0){
+			Instantiate(pickupParticle, transform.position, Quaternion.identity);
+		}
 		totalScore += score;
 		print(totalScore);
 		SetScoreText();
 	}
 
 	void SetScoreText() {
+
 		scoreText.text = "Total Score: " + totalScore.ToString();
 	}
 }
