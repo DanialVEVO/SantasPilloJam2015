@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour {
 
     int currentLastBG = 0;
 
+	float levelSpeedMultiplied;
    
 
 	// Use this for initialization
@@ -33,6 +34,9 @@ public class LevelManager : MonoBehaviour {
         childrenAsBackground = new GameObject[transform.childCount];
 
         childBounds = new Bounds[transform.childCount];
+
+		levelSpeedMultiplied = levelSpeed;
+
 
         for (int i = 0; i < childrenAsBackground.Length; i++)
         {
@@ -59,10 +63,15 @@ public class LevelManager : MonoBehaviour {
             childBounds[i] = theseBounds;
 
             Debug.Log(childBounds[i].size);
-        }             
-        
-
+        }
 	}
+
+	
+	public void setLevelSpeedMultiplier(float multiplier)
+	{
+		levelSpeedMultiplied = levelSpeed * multiplier;
+	}
+
 
    void LoadNewLevel()
     {
@@ -90,7 +99,7 @@ public class LevelManager : MonoBehaviour {
     {
         foreach (GameObject level in movingGameObjects)
         {
-            level.transform.position -= Vector3.forward * levelSpeed * Time.deltaTime;
+			level.transform.position -= Vector3.forward * levelSpeedMultiplied * Time.deltaTime;
 
             float stageLength;
             level.GetComponent<Level>().GetLength(out stageLength);
@@ -114,7 +123,7 @@ public class LevelManager : MonoBehaviour {
     {
         for (int i=0; i < childrenAsBackground.Length; i++)
         {
-            childrenAsBackground[i].transform.position -= Vector3.forward * levelSpeed * Time.deltaTime;
+			childrenAsBackground[i].transform.position -= Vector3.forward * levelSpeedMultiplied * Time.deltaTime;
 
             if (childrenAsBackground[i].transform.position.z + childBounds[i].max.z < levelEndZ)
             {
@@ -122,7 +131,7 @@ public class LevelManager : MonoBehaviour {
                 float movAdjust = 0;
 
                 if (i == 0)
-                    movAdjust = levelSpeed * Time.deltaTime;
+					movAdjust = levelSpeedMultiplied * Time.deltaTime;
 
                 childrenAsBackground[i].transform.position = new Vector3(childrenAsBackground[i].transform.position.x,
                                                                          childrenAsBackground[i].transform.position.y,
