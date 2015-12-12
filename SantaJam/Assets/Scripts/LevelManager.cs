@@ -133,9 +133,7 @@ public class LevelManager : MonoBehaviour {
                 if (i == 0)
 					movAdjust = levelSpeedMultiplied * Time.deltaTime;
 
-                childrenAsBackground[i].transform.position = new Vector3(childrenAsBackground[i].transform.position.x,
-                                                                         childrenAsBackground[i].transform.position.y,
-                                                                         childrenAsBackground[currentLastBG].transform.position.z + childBounds[currentLastBG].max.z - movAdjust);
+                childrenAsBackground[i].transform.position = new Vector3(0, 0, childrenAsBackground[currentLastBG].transform.position.z + childBounds[currentLastBG].max.z - movAdjust);
 
                 currentLastBG = i;
             }
