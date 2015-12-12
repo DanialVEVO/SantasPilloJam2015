@@ -64,10 +64,11 @@ public class LevelManager : MonoBehaviour {
 
             Debug.Log(childBounds[i].size);
         }
-	}
+       
+    }
 
-	
-	public void setLevelSpeedMultiplier(float multiplier)
+
+    public void setLevelSpeedMultiplier(float multiplier)
 	{
 		levelSpeedMultiplied = levelSpeed * multiplier;
 	}
@@ -121,9 +122,22 @@ public class LevelManager : MonoBehaviour {
 
     void BackgroundMovement()
     {
+        //float aa;
+
         for (int i=0; i < childrenAsBackground.Length; i++)
         {
-			childrenAsBackground[i].transform.position -= Vector3.forward * levelSpeedMultiplied * Time.deltaTime;
+
+            //aa = childrenAsBackground[i].transform.position.y;
+
+            Vector3 temp = childrenAsBackground[i].transform.position;
+
+            temp.z -= levelSpeedMultiplied * Time.deltaTime;
+
+            //Debug.Log("Difference: " + (childrenAsBackground[i].transform.position.y -  temp.y));
+
+            childrenAsBackground[i].transform.position = temp;
+
+            
 
             if (childrenAsBackground[i].transform.position.z + childBounds[i].max.z < levelEndZ)
             {
@@ -142,7 +156,7 @@ public class LevelManager : MonoBehaviour {
 
 
     // Update is called once per frame
-    void FixedUpdate ()
+    void Update ()
     {
 
         LevelMovement();
