@@ -33,7 +33,7 @@ public class Score : MonoBehaviour {
 
         scoreBar = GameObject.Find("Canvas").transform.FindChild("ScoreBar").transform.FindChild("Image").GetComponent<RectTransform>(); ;
         
-        scoreText = GameObject.Find("Canvas").transform.FindChild("Count").GetComponent<Text>();
+       // scoreText = GameObject.Find("Canvas").transform.FindChild("Count").GetComponent<Text>();
 
         winScreen = GameObject.Find("Canvas").transform.FindChild("YouWon").gameObject;
 
@@ -106,7 +106,7 @@ public class Score : MonoBehaviour {
 
 	void SetScoreText() {
 
-		scoreText.text = "Total Score: " + totalScore.ToString();
+		//scoreText.text = "Total Score: " + totalScore.ToString();
 
         // Debug.Log((Mathf.Abs(scoreBar.offsetMin.x) * 2) * (totalScore / maxScore));
 
