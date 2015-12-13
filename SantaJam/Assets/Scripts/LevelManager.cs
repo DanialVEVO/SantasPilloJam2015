@@ -24,11 +24,12 @@ public class LevelManager : MonoBehaviour {
     int currentLastBG = 0;
 
 	float levelSpeedMultiplied;
+    
    
 
 	// Use this for initialization
 	void Start () {
-
+        
         LoadNewLevel();
 
         childrenAsBackground = new GameObject[transform.childCount];
@@ -51,7 +52,7 @@ public class LevelManager : MonoBehaviour {
 
             foreach (MeshFilter mf in allChildren)
             {
-                Debug.Log(mf.sharedMesh.bounds.size);
+               // Debug.Log(mf.sharedMesh.bounds.size);
 
                 Vector3 pos = mf.transform.localPosition;
                 Bounds child_bounds = mf.sharedMesh.bounds;
@@ -62,7 +63,7 @@ public class LevelManager : MonoBehaviour {
 
             childBounds[i] = theseBounds;
 
-            Debug.Log(childBounds[i].size);
+            //Debug.Log(childBounds[i].size);
         }
        
     }
@@ -72,6 +73,11 @@ public class LevelManager : MonoBehaviour {
 	{
 		levelSpeedMultiplied = levelSpeed * multiplier;
 	}
+
+    public void GetSpeedMult(out float speedMult)
+    {
+        speedMult = levelSpeedMultiplied / levelSpeed;
+    }
 
 
    void LoadNewLevel()
@@ -129,13 +135,13 @@ public class LevelManager : MonoBehaviour {
 
             //aa = childrenAsBackground[i].transform.position.y;
 
-            Vector3 temp = childrenAsBackground[i].transform.position;
+           // Vector3 temp = childrenAsBackground[i].transform.position;
 
-            temp.z -= levelSpeedMultiplied * Time.deltaTime;
+            //temp.z -= levelSpeedMultiplied * Time.deltaTime;
 
             //Debug.Log("Difference: " + (childrenAsBackground[i].transform.position.y -  temp.y));
 
-            childrenAsBackground[i].transform.position = temp;
+            childrenAsBackground[i].transform.Translate(0,0, -levelSpeedMultiplied * Time.deltaTime);
 
             
 
