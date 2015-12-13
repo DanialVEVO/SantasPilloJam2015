@@ -2,7 +2,7 @@
 using System.Collections;
 using Pillo;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementOLD : MonoBehaviour
 {
 	// Pillo Settings
 	[SerializeField] [Range(0.0f, 1.0f)] float		pilloThreshold			= 0.20f;

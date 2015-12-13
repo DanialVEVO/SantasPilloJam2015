@@ -72,7 +72,6 @@ public class CameraBehaviour : MonoBehaviour {
 
         if (dzEnabled)
         {
-            Debug.Log("i update");
 
             // Measure the new distance and readjust the FOV accordingly.
             var currDistance = Vector3.Distance(transform.position, Vector3.up*4);
