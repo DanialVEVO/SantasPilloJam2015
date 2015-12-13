@@ -27,6 +27,8 @@ public class LevelManager : MonoBehaviour {
     int currentLastBG = 0;
 
 	float levelSpeedMultiplied;
+
+    bool win = false;
     
    
 
@@ -85,9 +87,20 @@ public class LevelManager : MonoBehaviour {
 
    public void LoadNewLevel()
     {
+        if (win)
+            return;
+
         GameObject newLevel = Instantiate(levels[Random.Range(0, levels.Length)], new Vector3(0,0,levelStartZ), Quaternion.identity) as GameObject;
         movingGameObjects.Add(newLevel);
         newLevel.GetComponent<Level>().setLengthBeforeNextAndLvlMgr(lengthBetweenLevels, this);
+    }
+
+    public void EndLevelSpawn()
+    {
+        win = true;
+
+        foreach (GameObject level in movingGameObjects)
+            level.SetActive(false);
     }
 
 
@@ -108,6 +121,9 @@ public class LevelManager : MonoBehaviour {
 
     void LevelMovement()
     {
+        if (win)
+            return;
+
         foreach (GameObject level in movingGameObjects)
         {
 			level.transform.position -= Vector3.forward * levelSpeedMultiplied * Time.deltaTime;

@@ -65,7 +65,7 @@ public class CameraBehaviour : MonoBehaviour {
 
         levelMgr.GetSpeedMult(out newSpeed);
 
-        Debug.Log(newSpeed + " " + origSpeed);
+        //Debug.Log(newSpeed + " " + origSpeed);
 
         if (origSpeed != newSpeed && !dzEnabled)
             StartDZ();

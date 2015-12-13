@@ -17,10 +17,16 @@ public class EnvironmentHit : MonoBehaviour {
 
 	void OnTriggerEnter (Collider player) {
 		player.GetComponent<Score>().CalcScore(points);
+
+        if (points > 0)
+        {
+            player.GetComponent<AudioSource>().pitch = Mathf.Round(Random.Range(4.0f, 6.0f)) / 5.0f;
+            player.GetComponent<AudioSource>().Play();
+        }
 	}
 
 	void ObjRotate (){
-		if(points > 0){
+		{
 			transform.RotateAround(transform.position, transform.up, rotateSpeed * Time.deltaTime);
 		}	
 	}
