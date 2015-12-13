@@ -113,7 +113,10 @@ public class Score : MonoBehaviour
         }
 
         if (score < 0)
+        {
+            GameObject.Find("Canvas").GetComponent<AudioSource>().Play();
             red += Time.deltaTime;
+        }
 
         //totalScore = Mathf.Max(0, totalScore + score);
         totalScore = Mathf.Clamp(totalScore + score, 0, maxScore);
