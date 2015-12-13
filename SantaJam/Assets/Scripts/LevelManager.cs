@@ -8,6 +8,9 @@ public class LevelManager : MonoBehaviour {
 
     [SerializeField]
     float levelEndZ = -20;
+
+    [SerializeField]
+    float lengthBetweenLevels = 20.0f;
     
     [SerializeField]
     float levelSpeed = 20;
@@ -80,10 +83,11 @@ public class LevelManager : MonoBehaviour {
     }
 
 
-   void LoadNewLevel()
+   public void LoadNewLevel()
     {
         GameObject newLevel = Instantiate(levels[Random.Range(0, levels.Length)], new Vector3(0,0,levelStartZ), Quaternion.identity) as GameObject;
         movingGameObjects.Add(newLevel);
+        newLevel.GetComponent<Level>().setLengthBeforeNextAndLvlMgr(lengthBetweenLevels, this);
     }
 
 
@@ -96,7 +100,7 @@ public class LevelManager : MonoBehaviour {
         movingGameObjects.Remove(thisLevel);
         Destroy(thisLevel);
 
-        LoadNewLevel();
+        //LoadNewLevel();
 
         StopCoroutine(RemoveAndDestroy(null));
     }

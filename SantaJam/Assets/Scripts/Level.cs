@@ -7,11 +7,29 @@ public class Level : MonoBehaviour {
 
     Bounds bounds;
 
+    float startZ = 0;
+
+    float lengthBeforeNext = 20;
+
+    LevelManager levelMgr;
+
+    bool once = false;
+
 	// Use this for initialization
 	void Start () {
 
         CalculateLengthOfStage();
+
+        startZ = transform.position.z;
 	}
+
+    public void setLengthBeforeNextAndLvlMgr(float newLength, LevelManager lvlMgr)
+    {
+        lengthBeforeNext = newLength;
+
+        levelMgr = lvlMgr;
+
+    }
 	
 	
 	public void GetLength (out float lengthOfStage)
@@ -38,6 +56,19 @@ public class Level : MonoBehaviour {
 
         zLength =  bounds.max.z;
 
+    }
+
+    void Update()
+    {
+
+        if (once)
+            return;
+
+        if (transform.position.z + zLength + lengthBeforeNext < startZ)
+        {
+            levelMgr.LoadNewLevel();
+            once = true;
+        }
     }
 
 }
