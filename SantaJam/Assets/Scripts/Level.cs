@@ -71,4 +71,10 @@ public class Level : MonoBehaviour {
         }
     }
 
+    void OnDestroy()
+    {
+        if (!once)
+            levelMgr.LoadNewLevel();
+    }
+
 }
