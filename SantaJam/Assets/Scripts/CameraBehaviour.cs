@@ -16,7 +16,7 @@ public class CameraBehaviour : MonoBehaviour {
 
     bool dzEnabled = false;
 
-    float prevSpeed = 1;
+    float origSpeed = 1;
 
     float newSpeed = 1;
 
@@ -65,9 +65,9 @@ public class CameraBehaviour : MonoBehaviour {
 
         levelMgr.GetSpeedMult(out newSpeed);
 
-        Debug.Log(newSpeed + " " + prevSpeed);
+        Debug.Log(newSpeed + " " + origSpeed);
 
-        if (prevSpeed != newSpeed && !dzEnabled)
+        if (origSpeed != newSpeed && !dzEnabled)
             StartDZ();
 
         if (dzEnabled)
@@ -80,10 +80,9 @@ public class CameraBehaviour : MonoBehaviour {
 
             transform.position = Vector3.Slerp(transform.position, origPos + Vector3.forward * (newSpeed -1) * maxCameraMov, Time.deltaTime) ;
 
-            if (prevSpeed == newSpeed)
+            if (origSpeed == newSpeed &&  origPos.z >= transform.position.z)
                 dzEnabled = false;
-            else
-                prevSpeed = newSpeed;
+            
         }
                 
     }

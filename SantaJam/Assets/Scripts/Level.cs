@@ -71,6 +71,11 @@ public class Level : MonoBehaviour {
         }
     }
 
+    void OnApplicationQuit()
+    {
+        once = true;
+    }
+
     void OnDestroy()
     {
         if (!once)
