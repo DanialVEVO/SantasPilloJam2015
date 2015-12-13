@@ -2,11 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Score : MonoBehaviour {
+public class Score : MonoBehaviour
+{
 
-	public int	totalScore;
-	
-	public ParticleSystem pickupParticle;
+    public int totalScore;
+
+    public ParticleSystem pickupParticle;
 
     [SerializeField]
     int maxScore = 200;
@@ -28,12 +29,16 @@ public class Score : MonoBehaviour {
 
     float oneWay = 1.0f;
 
+    float[] jingleBellsNotes = { 7f, 7f, 7f, 7f, 7f, 7f, 7f, 10f, 3f, 5f, 7f, 8f, 8f, 8f, 8f, 7f, 7f, 7f, 5f, 5f, 7f, 5f, 10f };
+    int jingleBellsNoteNow;
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         scoreBar = GameObject.Find("Canvas").transform.FindChild("ScoreBar").transform.FindChild("Image").GetComponent<RectTransform>(); ;
-        
-       // scoreText = GameObject.Find("Canvas").transform.FindChild("Count").GetComponent<Text>();
+
+        // scoreText = GameObject.Find("Canvas").transform.FindChild("Count").GetComponent<Text>();
 
         winScreen = GameObject.Find("Canvas").transform.FindChild("YouWon").gameObject;
 
@@ -41,21 +46,22 @@ public class Score : MonoBehaviour {
 
         hit = GameObject.Find("Canvas").transform.FindChild("Image").GetComponent<Image>();
 
-       
+        jingleBellsNoteNow = 0;
 
         totalScore = 0;
 
-		SetScoreText();
+        SetScoreText();
 
 
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-       // Debug.Log(red);
+    // Update is called once per frame
+    void Update()
+    {
+
+        // Debug.Log(red);
 
         if (red > 0.0f)
         {
@@ -79,41 +85,57 @@ public class Score : MonoBehaviour {
 
             hit.color = new Color(red, 0, 0, 1);
         }
-	
-	}
 
-	public void CalcScore (int score) {
+    }
+
+
+    public void PlayJingleBellsNote()
+    {
+        GetComponent<AudioSource>().pitch = Mathf.Pow(2f, ((jingleBellsNotes[jingleBellsNoteNow] - 12) / 12.0f));
+        GetComponent<AudioSource>().Play();
+
+        jingleBellsNoteNow += 1;
+
+        if (jingleBellsNoteNow >= jingleBellsNotes.Length)
+            jingleBellsNoteNow = 0;
+    }
+
+
+    public void CalcScore(int score)
+    {
 
         if (win)
             return;
 
-		if(score > 0){
-			Instantiate(pickupParticle, transform.position, Quaternion.identity);
-		}
+        if (score > 0)
+        {
+            Instantiate(pickupParticle, transform.position, Quaternion.identity);
+        }
 
         if (score < 0)
             red += Time.deltaTime;
-		
-		//totalScore = Mathf.Max(0, totalScore + score);
-        totalScore = Mathf.Clamp(totalScore+score, 0, maxScore);
+
+        //totalScore = Mathf.Max(0, totalScore + score);
+        totalScore = Mathf.Clamp(totalScore + score, 0, maxScore);
 
         if (totalScore == maxScore)
             SetEnd();
 
         //print(totalScore);
         SetScoreText();
-	}
+    }
 
-	void SetScoreText() {
+    void SetScoreText()
+    {
 
-		//scoreText.text = "Total Score: " + totalScore.ToString();
+        //scoreText.text = "Total Score: " + totalScore.ToString();
 
         // Debug.Log((Mathf.Abs(scoreBar.offsetMin.x) * 2) * (totalScore / maxScore));
 
         float floatMax = maxScore;
 
         scoreBar.offsetMax = new Vector2((Mathf.Abs(scoreBar.offsetMin.x) * 2) * (totalScore / floatMax) + scoreBar.offsetMin.x, scoreBar.offsetMax.y);
-	}
+    }
 
     void SetEnd()
     {
@@ -131,6 +153,6 @@ public class Score : MonoBehaviour {
         hit.CrossFadeColor(new Color(1, 0, 0), 0.2f, false, true);
     }
 
-   
+
 
 }
