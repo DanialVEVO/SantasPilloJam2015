@@ -92,15 +92,12 @@ public class LevelManager : MonoBehaviour {
 
         int scale = Random.Range(0, 2);
 
-        Debug.Log(scale);
 
         GameObject newLevel = Instantiate(levels[Random.Range(0, levels.Length)], new Vector3(0,0,levelStartZ), Quaternion.identity) as GameObject;
         movingGameObjects.Add(newLevel);
 
         newLevel.transform.localScale -= Vector3.right * scale * 2;
-
-        Debug.Log(newLevel.transform.localScale);
-
+        
         newLevel.GetComponent<Level>().setLengthBeforeNextAndLvlMgr(lengthBetweenLevels, this);
     }
 

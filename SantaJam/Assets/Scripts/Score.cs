@@ -11,6 +11,9 @@ public class Score : MonoBehaviour {
     [SerializeField]
     int maxScore = 200;
 
+    [SerializeField]
+    float fadeSpeed = 1.0f;
+
     Text scoreText;
 
     RectTransform scoreBar;
@@ -18,6 +21,12 @@ public class Score : MonoBehaviour {
     bool win = false;
 
     GameObject winScreen;
+
+    Image hit;
+
+    float red = 0.0f;
+
+    float oneWay = 1.0f;
 
     // Use this for initialization
     void Start () {
@@ -29,6 +38,10 @@ public class Score : MonoBehaviour {
         winScreen = GameObject.Find("Canvas").transform.FindChild("YouWon").gameObject;
 
         winScreen.SetActive(false);
+
+        hit = GameObject.Find("Canvas").transform.FindChild("Image").GetComponent<Image>();
+
+       
 
         totalScore = 0;
 
@@ -42,7 +55,30 @@ public class Score : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-       
+       // Debug.Log(red);
+
+        if (red > 0.0f)
+        {
+            red += Time.deltaTime * fadeSpeed * oneWay;
+
+            if (red >= 1.0f)
+            {
+                red = 1.0f;
+                oneWay = -1.0f;
+            }
+
+            hit.color = new Color(red, 0, 0, 1);
+
+            Debug.Log(red + " and color: " + hit.color);
+
+        }
+        else
+        {
+            red = 0.0f;
+            oneWay = 1.0f;
+
+            hit.color = new Color(red, 0, 0, 1);
+        }
 	
 	}
 
@@ -54,6 +90,9 @@ public class Score : MonoBehaviour {
 		if(score > 0){
 			Instantiate(pickupParticle, transform.position, Quaternion.identity);
 		}
+
+        if (score < 0)
+            red += Time.deltaTime;
 		
 		//totalScore = Mathf.Max(0, totalScore + score);
         totalScore = Mathf.Clamp(totalScore+score, 0, maxScore);
@@ -84,5 +123,14 @@ public class Score : MonoBehaviour {
 
         GameObject.Find("LevelManagerObject").GetComponent<LevelManager>().EndLevelSpawn();
     }
+
+    void RedFlash()
+    {
+        Debug.Log("hit");
+
+        hit.CrossFadeColor(new Color(1, 0, 0), 0.2f, false, true);
+    }
+
+   
 
 }
