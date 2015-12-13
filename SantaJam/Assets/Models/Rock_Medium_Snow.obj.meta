@@ -1,15 +1,17 @@
 fileFormatVersion: 2
-guid: 918f0dd095454324485420c62bcfd99b
-timeCreated: 1449936458
+guid: fc64b5cf29c736a49af15a410f9553d7
+timeCreated: 1450008668
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCube3
+    100000: polySurface24
+    100002: //RootNode
+    400000: polySurface24
+    400002: //RootNode
+    2300000: polySurface24
+    3300000: polySurface24
+    4300000: polySurface24
   materials:
     importMaterials: 0
     materialName: 0
@@ -33,7 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .600000024
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -52,7 +54,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

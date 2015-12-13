@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: 918f0dd095454324485420c62bcfd99b
-timeCreated: 1449936458
+guid: e44f91c0705738241a4cdc8d107bc8f0
+timeCreated: 1450008668
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: pCube3
+    100002: //RootNode
+    400000: pCube3
+    400002: //RootNode
+    2300000: pCube3
+    3300000: pCube3
     4300000: pCube3
   materials:
     importMaterials: 0
@@ -52,7 +54,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
